@@ -11,3 +11,276 @@ if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
 fi
 
 # Customize to your needs...
+zstyle ':completion:*' menu select
+# allow one error for every three characters typed in approximate completer
+zstyle ':completion:*:approximate:'    max-errors 'reply=( $((($#PREFIX+$#SUFFIX)/3 )) numeric )'
+# don't complete backup files as executables
+zstyle ':completion:*:complete:-command-::commands' ignored-patterns '(aptitude-*|*\~)'
+
+# start menu completion only if it could find no unambiguous initial string
+zstyle ':completion:*:correct:*'       insert-unambiguous true
+zstyle ':completion:*:corrections'     format $'%{\e[0;31m%}%d (errors: %e)%{\e[0m%}'
+zstyle ':completion:*:correct:*'       original true
+
+# activate color-completion
+zstyle ':completion:*:default'         list-colors ${(s.:.)LS_COLORS}
+
+# format on completion
+zstyle ':completion:*:descriptions'    format $'%{\e[0;31m%}completing %B%d%b%{\e[0m%}'
+
+# automatically complete 'cd -<tab>' and 'cd -<ctrl-d>' with menu
+# zstyle ':completion:*:*:cd:*:directory-stack' menu yes select
+
+# insert all expansions for expand completer
+zstyle ':completion:*:expand:*'        tag-order all-expansions
+zstyle ':completion:*:history-words'   list false
+
+# activate menu
+zstyle ':completion:*:history-words'   menu yes
+
+# ignore duplicate entries
+zstyle ':completion:*:history-words'   remove-all-dups yes
+zstyle ':completion:*:history-words'   stop yes
+
+# match uppercase from lowercase
+zstyle ':completion:*'                 matcher-list 'm:{a-z}={A-Z}'
+
+# describe options in full
+zstyle ':completion:*:options'         description 'yes'
+
+# on processes completion complete all user processes
+zstyle ':completion:*:processes'       command 'ps -au$USER'
+
+# offer indexes before parameters in subscripts
+zstyle ':completion:*:*:-subscript-:*' tag-order indexes parameters
+
+# provide verbose completion information
+zstyle ':completion:*'                 verbose true
+
+# recent (as of Dec 2007) zsh versions are able to provide descriptions
+# for commands (read: 1st word in the line) that it will list for the user
+# to choose from. The following disables that, because it's not exactly fast.
+zstyle ':completion:*:-command-:*:'    verbose false
+
+
+
+
+##'Open With'
+alias -s avi='smplayer'
+alias -s mp4='smplayer'
+alias -s mpg='smplayer'
+alias -s mpeg='smplayer'
+alias -s wmv='smplayer'
+alias -s mkv='smplayer'
+alias -s mov='smplayer'
+alias -s flv='smplayer'
+alias -s pdf='evince'
+alias -s png='eog'
+alias -s jpg='eog'
+alias -s jpeg='eog'
+alias -s bmp='eog'
+alias -s gif='eog'
+alias -s png='eog'
+alias -s html='firefox'
+alias -s htm='firefox'
+alias -s xz='file-roller'
+alias -s gz='file-roller'
+alias -s tar='file-roller'
+alias -s rar='file-roller'
+alias -s bz='file-roller'
+alias -s bz2='file-roller'
+alias -s zip='file-roller'
+alias -s tgz='file-roller'
+
+alias -g ¦='| grep'
+alias f='find . -name'
+alias fd='find . -type d -name'
+alias ff='find . -type f -name'
+alias h='history'
+alias cpd='cp -r'
+alias scpd='scp -r'
+alias rmd='rm -rf'
+alias lS='l -Sr --group-directories-first'
+alias :q=exit
+alias away='away -C bla'
+alias nemo='nemo --no-desktop'
+alias mate='~/projects/c4-mate/c4-mate.py'
+
+# cd + ls  ... and dont forget to add that to completion
+cdl() { cd $@; ls }
+#compdef _cd cdl
+
+# activate ipv6
+alias v6='sudo gogoc -r 2'
+#source '/etc/profile.d/devkitarm.sh'
+
+export DEVKITPPC=/opt/devkitpro/devkitPPC
+export DEVKITPRO=/opt/devkitpro
+
+alias reboot='sudo systemctl reboot'
+alias restart='sudo systemctl restart'
+alias start='sudo systemctl start'
+alias stop='sudo systemctl stop'
+alias iftop='sudo iftop'
+alias iotop='sudo iotop'
+alias htop='sudo htop'
+alias nethogs='sudo nethogs'
+alias prosodyctl='sudo prosodyctl'
+alias vim='vim -O --servername VIM'
+alias svim='sudo -E vim -O'
+alias psa='ps aux | grep -v "grep --color=auto" | grep'
+alias lsport='lsof -Pan -i tcp -i udp'
+alias slsport='sudo lsof -Pan -i tcp -i udp'
+alias http='servefile . -p 8000 -l'
+alias lt='l -tr'
+alias lta='l -tr -a'
+alias l='ll'
+alias fstrim='sudo fstrim -v'
+alias bbstatus='sudo cat /proc/acpi/bbswitch'
+alias zombies="ps aux | awk '{if (\$8=='Z') { print \$2 }}'"
+alias ip6="ip -f inet6"
+alias avrnetdude="sudo avrdude -p m644 -c usbasp -P usb"
+alias twitch="livestreamer $1 best"
+
+alias startx='exec startx'
+alias cymake='python setup.py build_ext --inplace'
+
+alias pbcopy='xsel --clipboard --input'
+alias pbpaste='xsel --clipboard --output'
+
+alias srsync=rsync -Pavz -e ssh
+
+alias prosodyctl='sudo prosodyctl'
+
+export EDITOR=vim
+
+export WIILOAD=tcp:192.168.1.103
+
+alias icanhazip='curl icanhazip.com'
+
+rm -rf ~/.local/share/applications/wine-extension-*
+pkill caribou
+pkill antler-keyboard
+
+unset http_proxy https_proxy
+#export CC=/usr/bin/colorgcc
+#export GCC=/usr/bin/colorgcc
+#export PATH="/usr/lib/colorgcc/bin/:$PATH"    # As per usual colorgcc installation, leave unchanged (don't add ccache)
+export CCACHE_PATH="/usr/bin"                 # Tell ccache to only use compilers here
+export LD_LIBRARY_PATH="/usr/lib/jvm/java-7-openjdk/jre/lib/amd64/"
+export NDK_HOME="/opt/android-ndk/"
+
+
+export PATH="/home/gordin/node_modules/.bin:$PATH" #node binaries
+export PATH="/home/gordin/.local/bin:$PATH" #node binaries
+export YUI_COMPRESSOR=/usr/share/java/yuicompressor-2.4.7.jar
+
+export PATH="/home/gordin/bin:$PATH"
+export PATH="/home/gordin/.luarocks/bin:$PATH"
+
+bindkey -v
+
+bindkey "\e[1~" beginning-of-line # Home
+bindkey "\e[4~" end-of-line # End
+bindkey "\e[5~" beginning-of-history # PageUp
+bindkey "\e[6~" end-of-history # PageDown
+bindkey "\e[2~" quoted-insert # Ins
+bindkey "\e[3~" delete-char # Del
+bindkey "\e[5C" forward-word
+bindkey "\eOc" emacs-forward-word
+bindkey "\e[5D" backward-word
+bindkey "\eOd" emacs-backward-word
+bindkey "\e\e[C" forward-word
+bindkey "\e\e[D" backward-word
+bindkey "\e[Z" reverse-menu-complete # Shift+Tab
+# for rxvt
+bindkey "\e[7~" beginning-of-line # Home
+bindkey "\e[8~" end-of-line # End
+# for non RH/Debian xterm, can't hurt for RH/Debian xterm
+bindkey "\eOH" beginning-of-line
+bindkey "\eOF" end-of-line
+# for freebsd console
+bindkey "\e[H" beginning-of-line
+bindkey "\e[F" end-of-line
+# for guake
+bindkey "\eOF" end-of-line
+bindkey "\eOH" beginning-of-line
+bindkey "^[[1;5D" backward-word
+bindkey "^[[1;5C" forward-word
+bindkey "\e[3~" delete-char # Del
+
+#bindkey "^[[A" history-beginning-search-backward
+#bindkey "^[[B" history-beginning-search-forward
+
+bindkey '^R' history-incremental-search-backward
+bindkey '^?' backward-delete-char
+
+bindkey '^E' end-of-line
+bindkey '^A' beginning-of-line
+
+SSH_AUTH_SOCK=`netstat -xl | grep -o "$HOME"'/.cache/keyring-.*/ssh$'`
+[ -z "$SSH_AUTH_SOCK" ] || export SSH_AUTH_SOCK
+
+alias usemvn2='M2_HOME=/opt/maven2; . /opt/maven2/bin/usemvn.sh'
+alias usemvn3='M2_HOME=/opt/maven; . /opt/maven2/bin/usemvn.sh'
+alias java="$(which java) -Dawt.useSystemAAFontSettings=gasp"
+
+export PATH="/opt/u23/bin:$PATH" #U23 STM32 framework
+
+export PATH="/usr/lib/colorgcc/bin/:$PATH"    # As per usual colorgcc installation, leave unchanged (don't add ccache)
+export CCACHE_PATH="/usr/bin"                 # Tell ccache to only use compilers here
+
+export PATH="/home/gordin/.gem/ruby/2.0.0/bin/:$PATH"    # ruby gems
+export PATH="/home/gordin/.gem/ruby/2.1.0/bin/:$PATH"    # ruby gems
+
+REPORTTIME=10
+
+alias systemstate='for t in $(systemctl --type help | grep -v "^Available"); do
+    echo -e "\n---------- ${t} ----------"
+    systemctl --all --no-pager --type="$t" --show-types
+done'
+
+# source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+# source /usr/share/zsh/plugins/zsh-history-substring-search/zsh-history-substring-search.zsh
+#
+# # bind UP and DOWN arrow keys
+zmodload zsh/terminfo
+bindkey "$terminfo[kcuu1]"  history-substring-search-up
+bindkey "$terminfo[kcud1]"  history-substring-search-down
+
+# bindkey "^[[B" history-substring-search-down
+# bindkey "^[[A" history-substring-search-up
+bindkey "^P" history-substring-search-up
+bindkey "^N" history-substring-search-down
+
+# bind P and N for EMACS mode
+bindkey -M emacs '^P' history-substring-search-up
+bindkey -M emacs '^N' history-substring-search-down
+
+# bind k and j for VI mode
+bindkey -M vicmd 'k' history-substring-search-up
+bindkey -M vicmd 'j' history-substring-search-down
+
+alias unlock-paradise='ssh -o "UserKnownHostsFile=~/.ssh/known_hosts.paradise" -i "/home/gordin/.ssh/paradise.pub" root@213.218.180.33'
+
+# alias tableflip='echo -n "（╯°□°）╯ ┻━┻" | xclip -selection clipboard -i'
+# alias ldis='echo -n "ಠ_ಠ" | xclip -selection clipboard -i'
+# alias shrug='echo -n "¯\_(ツ)_/¯" | xclip -selection clipboard -i'
+
+alias fixflash='sudo -E vim -b /usr/lib/mozilla/plugins/libflashplayer.so +%s/NET_ACTIVE_WINDOW/_ET_ACTIVE_WINDOW/ +x'
+
+ export $( dex /etc/xdg/autostart/gnome-keyring-ssh.desktop )
+
+#virtualenvwrapper
+# export WORKON_HOME=~/Envs
+# source /usr/bin/virtualenvwrapper.sh
+
+export FZF_DEFAULT_OPTS="--sort 11000"
+
+export NVM_DIR="/home/gordin/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# Base16 Shell
+BASE16_SHELL="$HOME/.config/base16-shell/base16-monokai.dark.sh"
+[[ -s $BASE16_SHELL ]] && source $BASE16_SHELL
